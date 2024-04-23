@@ -59,7 +59,7 @@ public class TareaServicioImpl implements TareaServicio{
     @Override
     public void eliminarTarea(Long id) {
         Tareas tareas = tareaRepositorio.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
+                .orElseThrow(() -> new ResourceNotFoundException("Tarea", "id", id));
         tareaRepositorio.delete(tareas);
 
     }
