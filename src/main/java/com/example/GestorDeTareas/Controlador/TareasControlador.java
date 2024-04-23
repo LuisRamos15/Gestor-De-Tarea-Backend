@@ -21,15 +21,15 @@ public class TareasControlador {
     }
 
     @PostMapping
-    public ResponseEntity<TareasDTO> guardarPublicacion(@RequestBody TareasDTO tareasDTO) {
+    public ResponseEntity<TareasDTO> guardarTarea(@RequestBody TareasDTO tareasDTO) {
         return new ResponseEntity<>(tareaServicio.crearTarea(tareasDTO), HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<TareasDTO> obtenerPublicacionPorId(@PathVariable(name = "id") long id) {
+    public ResponseEntity<TareasDTO> obtenerTareaPorId(@PathVariable(name = "id") long id) {
         return ResponseEntity.ok(tareaServicio.obtenerTareaPorId(id));
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarPublicacion(@PathVariable(name = "id") long id) {
+    public ResponseEntity<String> eliminarTarea(@PathVariable(name = "id") long id) {
         tareaServicio.eliminarTarea(id);
         return new ResponseEntity<>("Tarea eliminada con exito", HttpStatus.OK);
     }
