@@ -1,4 +1,4 @@
-﻿package com.example.GestorDeTareas.DTO;
+package com.example.GestorDeTareas.DTO;
 
 import com.example.GestorDeTareas.Modelos.Usuario;
 
@@ -7,7 +7,7 @@ public class AuthDTO {
     private String token;
     private String error;
 
-    public void AuthDTO() {
+    public AuthDTO() {
     }
 
     public AuthDTO(Usuario user, String token, String error) {

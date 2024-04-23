@@ -24,9 +24,9 @@ public class TareaServicioImpl implements TareaServicio{
     public TareasDTO crearTarea(TareasDTO tareasDTO) {
         Tareas tareas = mapearEntidad(tareasDTO);
 
-        Tareas nuevaPublicacion = tareaRepositorio.save(tareas);
+        Tareas nuevaTarea = tareaRepositorio.save(tareas);
 
-        TareasDTO publicacionRespuesta = mapearDTO(nuevaPublicacion);
+        TareasDTO publicacionRespuesta = mapearDTO(nuevaTarea);
         return publicacionRespuesta;
     }
 
