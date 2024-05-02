@@ -20,10 +20,11 @@ public class TareasControlador {
         return tareaServicio.obtenerTodasLasTareas();
     }
 
-    @PostMapping
-    public ResponseEntity<TareasDTO> guardarTarea(@RequestBody TareasDTO tareasDTO) {
-        return new ResponseEntity<>(tareaServicio.crearTarea(tareasDTO), HttpStatus.CREATED);
+    @PostMapping("/categorias/{categoriaId}")
+    public ResponseEntity<TareasDTO> guardarTarea(@PathVariable(value = "categoriaId") long categoriaId, @RequestBody TareasDTO tareasDTO) {
+        return new ResponseEntity<>(tareaServicio.crearTarea(categoriaId, tareasDTO), HttpStatus.CREATED);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<TareasDTO> obtenerTareaPorId(@PathVariable(name = "id") long id) {
         return ResponseEntity.ok(tareaServicio.obtenerTareaPorId(id));

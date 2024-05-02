@@ -7,10 +7,13 @@ import java.util.List;
 
 public interface CategoriaServicio {
 
-    CategoriaDTO crearCategoria (CategoriaDTO categoriaDTO);
+    public CategoriaDTO crearCategoria (long tareaId, CategoriaDTO categoriaDTO);
+
     CategoriaDTO actualizarCategoria(Long id, CategoriaDTO categoriaDTO);
+
     void eliminarCategoria(Long id);
-    List<CategoriaDTO> obtenerTodasLasCategorias();
+
+    public List<CategoriaDTO> obtenerCategoriasPorTareasId(long tareasId);
 
 
 }

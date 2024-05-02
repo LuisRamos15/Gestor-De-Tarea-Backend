@@ -3,13 +3,17 @@ package com.example.GestorDeTareas.Servicio;
 import com.example.GestorDeTareas.DTO.CategoriaDTO;
 import com.example.GestorDeTareas.DTO.TareasDTO;
 import com.example.GestorDeTareas.Modelos.Categoria;
+import com.example.GestorDeTareas.Modelos.Tareas;
 import com.example.GestorDeTareas.Repositorio.CategoriaRepositorio;
+import com.example.GestorDeTareas.Repositorio.TareaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import com.example.GestorDeTareas.Excepciones.ResourceNotFoundException;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,16 +25,22 @@ public class CategoriaServicioImpl implements CategoriaServicio {
     @Autowired
     private CategoriaRepositorio categoriaRepositorio;
 
+    @Autowired
+    private TareaRepositorio tareaRepositorio;
+
+
     @Override
-    public CategoriaDTO crearCategoria(CategoriaDTO categoriaDTO) {
-
-        Categoria categoriaRecibida = mapearEntidad(categoriaDTO);
-        Categoria nuevaCategoria = categoriaRepositorio.save(categoriaRecibida);
-        CategoriaDTO categoriaRespuesta = mapearDTO(nuevaCategoria);
-
-        return categoriaRespuesta;
-
+    public CategoriaDTO crearCategoria(long tareaId, CategoriaDTO categoriaDTO) {
+        Categoria categoria = mapearEntidad(categoriaDTO);
+        Tareas tarea = tareaRepositorio.findById(tareaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tarea", "id", tareaId));
+        Set<Tareas> tareas = new HashSet<>();
+        tareas.add(tarea);
+        categoria.setTareas(tareas);
+        Categoria nuevaCategoria = categoriaRepositorio.save(categoria);
+        return mapearDTO(nuevaCategoria);
     }
+
 
     @Override
     public CategoriaDTO actualizarCategoria(Long id, CategoriaDTO categoriaDTO) {
@@ -53,11 +63,15 @@ public class CategoriaServicioImpl implements CategoriaServicio {
     }
 
     @Override
-    public List<CategoriaDTO> obtenerTodasLasCategorias() {
-        List<Categoria> listaDeCategorias = categoriaRepositorio.findAll();
-        return listaDeCategorias.stream().map(categoria -> mapearDTO(categoria)).collect(Collectors.toList());
+    public List<CategoriaDTO> obtenerCategoriasPorTareasId(long tareasId) {
+        List<Categoria> categorias = categoriaRepositorio.findByTareasId(tareasId);
+        return categorias.stream().map(this::mapearDTO).collect(Collectors.toList());
     }
-
+    /*@Override
+    public List<CategoriaDTO> obtenerCategoriasPorTareasId(long tareasId) {
+        List<Categoria> categorias = categoriaRepositorio.findByTareaId(tareasId);
+        return categorias.stream().map(categoria -> mapearDTO(categoria)).collect(Collectors.toList());
+    }*/
 
     private CategoriaDTO mapearDTO(Categoria categoria) {
         CategoriaDTO categoriaDTO = modelMapper.map(categoria, CategoriaDTO.class);

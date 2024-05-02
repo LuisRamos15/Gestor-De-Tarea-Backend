@@ -2,13 +2,17 @@ package com.example.GestorDeTareas.Servicio;
 
 import com.example.GestorDeTareas.DTO.TareasDTO;
 import com.example.GestorDeTareas.Excepciones.ResourceNotFoundException;
+import com.example.GestorDeTareas.Modelos.Categoria;
 import com.example.GestorDeTareas.Modelos.Tareas;
+import com.example.GestorDeTareas.Repositorio.CategoriaRepositorio;
 import com.example.GestorDeTareas.Repositorio.TareaRepositorio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,14 +24,20 @@ public class TareaServicioImpl implements TareaServicio{
     @Autowired
     private TareaRepositorio tareaRepositorio;
 
+    @Autowired
+    private CategoriaRepositorio categoriaRepositorio;
+
+
     @Override
-    public TareasDTO crearTarea(TareasDTO tareasDTO) {
-        Tareas tareas = mapearEntidad(tareasDTO);
-
+    public TareasDTO crearTarea(long categoriaId, TareasDTO tareaDto) {
+        Tareas tareas = mapearEntidad(tareaDto);
+        Categoria categoria = categoriaRepositorio.findById(categoriaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria", "id", categoriaId));
+        Set<Categoria> categorias = new HashSet<>();
+        categorias.add(categoria);
+        tareas.setCategorias(categorias);
         Tareas nuevaTarea = tareaRepositorio.save(tareas);
-
-        TareasDTO publicacionRespuesta = mapearDTO(nuevaTarea);
-        return publicacionRespuesta;
+        return mapearDTO(nuevaTarea);
     }
 
     @Override

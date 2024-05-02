@@ -17,13 +17,17 @@ public class CategoriaController {
     @Autowired
     private CategoriaServicio categoriaServicio;
 
-    @PostMapping
-    public ResponseEntity<CategoriaDTO> guardarCategoria(@RequestBody CategoriaDTO categoriaDTO){
-
-        CategoriaDTO categoriaDto = categoriaServicio.crearCategoria(categoriaDTO);
-        return new ResponseEntity<>(categoriaDTO, HttpStatus.CREATED);
+    @PostMapping("/tareas/{tareaId}")
+    public ResponseEntity<CategoriaDTO> guardarCategoria(@PathVariable(value = "tareaId") long tareaId,@RequestBody CategoriaDTO categoriaDTO){
+        return new ResponseEntity<>(categoriaServicio.crearCategoria(tareaId, categoriaDTO), HttpStatus.CREATED);
 
     }
+
+
+    /* @PostMapping("/categorias/{categoriaId}")
+    public ResponseEntity<TareasDTO> guardarTarea(@PathVariable(value = "categoriaId") long categoriaId, @RequestBody TareasDTO tareasDTO) {
+        return new ResponseEntity<>(tareaServicio.crearTarea(categoriaId, tareasDTO), HttpStatus.CREATED);
+    }  */
 
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaDTO> editarCategoria(@PathVariable (name = "id") long id, @RequestBody CategoriaDTO categoriaDTO){
@@ -40,9 +44,16 @@ public class CategoriaController {
         return new ResponseEntity<>("Se ha eliminado con exito la categoria", HttpStatus.OK);
 
     }
-    @GetMapping
-    public List<CategoriaDTO> listarCategorias(){
-        return categoriaServicio.obtenerTodasLasCategorias();
+    @GetMapping("/tareas/{tareaId}")
+    public List<CategoriaDTO> listarCategoriaPorTareaId(@PathVariable(value = "tareaId") Long tareaId){
+        return categoriaServicio.obtenerCategoriasPorTareasId(tareaId);
     }
+
+
+    /* @GetMapping("/publicaciones/{publicacionId}/comentarios/{id}")
+	public ResponseEntity<ComentarioDTO> obtenerComentarioPorId(@PathVariable(value = "publicacionId") Long publicacionId,@PathVariable(value = "id") Long comentarioId){
+		ComentarioDTO comentarioDTO = comentarioServicio.obtenerComentarioPorId(publicacionId, comentarioId);
+		return new ResponseEntity<>(comentarioDTO,HttpStatus.OK);
+	} */
 
 }

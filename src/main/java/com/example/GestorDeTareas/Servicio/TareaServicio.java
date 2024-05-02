@@ -7,8 +7,9 @@ import java.util.List;
 
 public interface TareaServicio {
 
-    TareasDTO crearTarea(TareasDTO tareaDto);
-    List<TareasDTO> obtenerTodasLasTareas();
+    public TareasDTO crearTarea(long categoriaId, TareasDTO tareaDto);
+
+    public List<TareasDTO> obtenerTodasLasTareas();
 
     TareasDTO obtenerTareaPorId(Long id);
 

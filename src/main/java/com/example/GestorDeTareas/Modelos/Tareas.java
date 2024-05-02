@@ -3,6 +3,8 @@ package com.example.GestorDeTareas.Modelos;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 
@@ -28,9 +30,30 @@ public class Tareas {
     @Enumerated (EnumType.STRING)
     private Estado status;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "Tareas_Categorias", joinColumns = @JoinColumn(name = "Tareas_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "Categorias_id", referencedColumnName = "id")
+    )
+    private Set<Categoria> categorias = new HashSet<>();
+
+
+    public Tareas(Set<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
+    public Set<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(Set<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
     public Estado getStatus() {
         return status;
     }
+
 
     public void setStatus(Estado status) {
         this.status = status;
