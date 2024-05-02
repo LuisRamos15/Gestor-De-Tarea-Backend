@@ -1,12 +1,16 @@
 package com.example.GestorDeTareas.Servicio;
 
 import com.example.GestorDeTareas.DTO.CategoriaDTO;
+import com.example.GestorDeTareas.DTO.TareasDTO;
 import com.example.GestorDeTareas.Modelos.Categoria;
 import com.example.GestorDeTareas.Repositorio.CategoriaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import com.example.GestorDeTareas.Excepciones.ResourceNotFoundException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoriaServicioImpl implements CategoriaServicio {
@@ -32,6 +36,7 @@ public class CategoriaServicioImpl implements CategoriaServicio {
     public CategoriaDTO actualizarCategoria(Long id, CategoriaDTO categoriaDTO) {
         Categoria categoria =categoriaRepositorio.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria", " Id", id));
 
+
         categoria.setNombre(categoriaDTO.getNombre());
         categoria.setDescripcion(categoriaDTO.getDescripcion());
 
@@ -45,6 +50,12 @@ public class CategoriaServicioImpl implements CategoriaServicio {
         Categoria categoria =categoriaRepositorio.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria", " Id", id));
 
         categoriaRepositorio.delete(categoria);
+    }
+
+    @Override
+    public List<CategoriaDTO> obtenerTodasLasCategorias() {
+        List<Categoria> listaDeCategorias = categoriaRepositorio.findAll();
+        return listaDeCategorias.stream().map(categoria -> mapearDTO(categoria)).collect(Collectors.toList());
     }
 
 

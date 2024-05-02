@@ -1,11 +1,14 @@
 package com.example.GestorDeTareas.Controlador;
 
 import com.example.GestorDeTareas.DTO.CategoriaDTO;
+import com.example.GestorDeTareas.DTO.TareasDTO;
 import com.example.GestorDeTareas.Servicio.CategoriaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/categorias")
@@ -36,6 +39,10 @@ public class CategoriaController {
         categoriaServicio.eliminarCategoria(id);
         return new ResponseEntity<>("Se ha eliminado con exito la categoria", HttpStatus.OK);
 
+    }
+    @GetMapping
+    public List<CategoriaDTO> listarCategorias(){
+        return categoriaServicio.obtenerTodasLasCategorias();
     }
 
 }

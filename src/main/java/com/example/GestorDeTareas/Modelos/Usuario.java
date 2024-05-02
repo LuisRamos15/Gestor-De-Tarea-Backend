@@ -3,6 +3,7 @@ package com.example.GestorDeTareas.Modelos;
 import jakarta.persistence.*;
 
 @Entity
+
 @Table(name = "usuario")
 public class Usuario {
     @Id
