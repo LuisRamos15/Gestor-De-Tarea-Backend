@@ -24,6 +24,17 @@ public class Tareas {
     @Column(name = "prioridad")
     private String prioridad;
 
+    public enum Estado { COMPLETADO, PENDIENTE, EN_PROCESO };
+    @Enumerated (EnumType.STRING)
+    private Estado status;
+
+    public Estado getStatus() {
+        return status;
+    }
+
+    public void setStatus(Estado status) {
+        this.status = status;
+    }
 
     public Long getId() {
         return id;

@@ -1,5 +1,6 @@
 package com.example.GestorDeTareas.DTO;
 
+import com.example.GestorDeTareas.Modelos.Tareas;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
@@ -16,10 +17,24 @@ public class TareasDTO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaVencimiento;
 
+
+
     private String prioridad;
+    public enum Estado { COMPLETADO, PENDIENTE, EN_PROCESO };
+    private Estado status;
+
+    public Estado getStatus() {
+        return status;
+    }
+
+    public void setStatus(Estado status) {
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -41,6 +56,7 @@ public class TareasDTO {
         this.descripcion = descripcion;
     }
 
+
     public LocalDateTime getFechaVencimiento() {
         return fechaVencimiento;
     }
@@ -60,10 +76,13 @@ public class TareasDTO {
     public TareasDTO() {
     }
 
-    public TareasDTO(String titulo, String descripcion, LocalDateTime fechaVencimiento, String prioridad) {
+    public TareasDTO(Long id, String titulo, String descripcion, LocalDateTime fechaVencimiento, String prioridad, Estado status) {
+        this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaVencimiento = fechaVencimiento;
         this.prioridad = prioridad;
+        this.status = status;
     }
+
 }
