@@ -14,8 +14,7 @@ public class TareasDTO {
 
     private String descripcion;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime fechaVencimiento;
+    private String fechaVencimiento;
 
 
 
@@ -57,11 +56,11 @@ public class TareasDTO {
     }
 
 
-    public LocalDateTime getFechaVencimiento() {
+    public String getFechaVencimiento() {
         return fechaVencimiento;
     }
 
-    public void setFechaVencimiento(LocalDateTime fechaVencimiento) {
+    public void setFechaVencimiento(String fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 
@@ -76,7 +75,7 @@ public class TareasDTO {
     public TareasDTO() {
     }
 
-    public TareasDTO(Long id, String titulo, String descripcion, LocalDateTime fechaVencimiento, String prioridad, Estado status) {
+    public TareasDTO(Long id, String titulo, String descripcion, String fechaVencimiento, String prioridad, Estado status) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;

@@ -21,10 +21,13 @@ public class Tareas {
     private String descripcion;
 
     @Column(name = "fecha_vencimiento", nullable = false)
-    private LocalDateTime fechaVencimiento;
+    private String fechaVencimiento;
 
     @Column(name = "prioridad")
     private String prioridad;
+
+    @Column(name = "usuario_Id")
+    private Long usuarioId;
 
     public enum Estado { COMPLETADO, PENDIENTE, EN_PROCESO };
     @Enumerated (EnumType.STRING)
@@ -54,6 +57,13 @@ public class Tareas {
         return status;
     }
 
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
+    }
 
     public void setStatus(Estado status) {
         this.status = status;
@@ -83,11 +93,11 @@ public class Tareas {
         this.descripcion = descripcion;
     }
 
-    public LocalDateTime getFechaVencimiento() {
+    public String getFechaVencimiento() {
         return fechaVencimiento;
     }
 
-    public void setFechaVencimiento(LocalDateTime fechaVencimiento) {
+    public void setFechaVencimiento(String fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 
@@ -99,11 +109,15 @@ public class Tareas {
         this.prioridad = prioridad;
     }
 
-    public Tareas(String titulo, String descripcion, LocalDateTime fechaVencimiento, String prioridad) {
+    public Tareas(Long id, String titulo, String descripcion, String fechaVencimiento, String prioridad, Long usuarioId, Estado status, Set<Categoria> categorias) {
+        this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaVencimiento = fechaVencimiento;
         this.prioridad = prioridad;
+        this.usuarioId = usuarioId;
+        this.status = status;
+        this.categorias = categorias;
     }
 
     public Tareas() {

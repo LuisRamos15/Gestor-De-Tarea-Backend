@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/Tareas")
+@RequestMapping("/api/tareas")
 public class TareasControlador {
     @Autowired
     private TareaServicio tareaServicio;
@@ -20,14 +20,15 @@ public class TareasControlador {
         return tareaServicio.obtenerTodasLasTareas();
     }
 
-    @PostMapping("/categorias/{categoriaId}")
-    public ResponseEntity<TareasDTO> guardarTarea(@PathVariable(value = "categoriaId") long categoriaId, @RequestBody TareasDTO tareasDTO) {
-        return new ResponseEntity<>(tareaServicio.crearTarea(categoriaId, tareasDTO), HttpStatus.CREATED);
+    @PostMapping("/usuario/{usuarioId}/categorias/{categoriaId}")
+    public ResponseEntity<TareasDTO> guardarTarea(@PathVariable(value = "categoriaId") long categoriaId, @RequestBody TareasDTO tareasDTO,
+                                                  @PathVariable(value = "usuarioId") long usuarioId) {
+        return new ResponseEntity<>(tareaServicio.crearTarea(categoriaId, tareasDTO, usuarioId), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TareasDTO> obtenerTareaPorId(@PathVariable(name = "id") long id) {
-        return ResponseEntity.ok(tareaServicio.obtenerTareaPorId(id));
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<Object> obtenerTareaPorId(@PathVariable(value = "usuarioId") long usuarioId) {
+        return ResponseEntity.ok(tareaServicio.obtenerTareaPorId(usuarioId));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarTarea(@PathVariable(name = "id") long id) {
