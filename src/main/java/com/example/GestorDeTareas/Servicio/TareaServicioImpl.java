@@ -74,6 +74,9 @@ public class TareaServicioImpl implements TareaServicio{
         tareas.setDescripcion(tareaDto.getDescripcion());
         tareas.setFechaVencimiento(tareaDto.getFechaVencimiento());
         tareas.setPrioridad(tareaDto.getPrioridad());
+        tareas.setCategoria(tareaDto.getCategoria());
+        Tareas.Estado estado = Tareas.Estado.valueOf(tareaDto.getStatus().name());
+        tareas.setStatus(estado);
 
         Tareas tareaActualizada = tareaRepositorio.save(tareas);
         return mapearDTO(tareaActualizada);

@@ -32,15 +32,13 @@ public class Tareas {
     @Column(name = "usuario_Id")
     private Long usuarioId;
 
-    public enum Estado { COMPLETADO, PENDIENTE, EN_PROCESO };
+    public enum Estado { COMPLETADO, PENDIENTE, EN_PROCESO }
     @Enumerated (EnumType.STRING)
     private Estado status;
-
 
     public Estado getStatus() {
         return status;
     }
-
     public Long getUsuarioId() {
         return usuarioId;
     }
