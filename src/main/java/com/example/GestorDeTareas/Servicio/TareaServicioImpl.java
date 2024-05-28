@@ -2,20 +2,16 @@ package com.example.GestorDeTareas.Servicio;
 
 import com.example.GestorDeTareas.DTO.TareasDTO;
 import com.example.GestorDeTareas.Excepciones.ResourceNotFoundException;
-import com.example.GestorDeTareas.Modelos.Categoria;
 import com.example.GestorDeTareas.Modelos.Tareas;
 import com.example.GestorDeTareas.Modelos.Usuario;
-import com.example.GestorDeTareas.Repositorio.CategoriaRepositorio;
 import com.example.GestorDeTareas.Repositorio.TareaRepositorio;
 import com.example.GestorDeTareas.Repositorio.UsuarioRepositorio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,27 +24,16 @@ public class TareaServicioImpl implements TareaServicio{
     private TareaRepositorio tareaRepositorio;
 
     @Autowired
-    private CategoriaRepositorio categoriaRepositorio;
-    @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
 
     @Override
-    public TareasDTO crearTarea(long categoriaId, TareasDTO tareaDto, Long usuarioId) {
+    public TareasDTO crearTarea(TareasDTO tareaDto, Long usuarioId) {
         Tareas tareas = mapearEntidad(tareaDto);
 
         Optional<Usuario> usuario = usuarioRepositorio.findById(usuarioId);
 
-        Categoria categoria = categoriaRepositorio.findById(categoriaId)
-                .orElseThrow(() -> new ResourceNotFoundException("Categoria", "id", categoriaId));
-
-        Set<Categoria> categorias = new HashSet<>();
-
-        categorias.add(categoria);
-
-        tareas.setCategorias(categorias);
         tareas.setUsuarioId(usuario.get().getId());
-
 
         Tareas nuevaTarea = tareaRepositorio.save(tareas);
 
@@ -63,14 +48,21 @@ public class TareaServicioImpl implements TareaServicio{
 
     @Override
     public Object obtenerTareaPorId(Long usuarioId) {
-        Optional<Usuario> usuario = usuarioRepositorio.findById(usuarioId);
-        List<Tareas> tareas =tareaRepositorio.findByUsuarioId(usuario.get().getId());
+        try {
+            Optional<Usuario> usuario = usuarioRepositorio.findById(usuarioId);
+
+            List<Tareas> tareas = tareaRepositorio.findByUsuarioId(usuario.get().getId());
 
 
 
-        return new Object[]{
-                tareas
-        };
+            return new Object[]{
+                    tareas
+            };
+        } catch (Exception error) {
+               return new Object[]{
+                       error.getMessage()
+               };
+        }
     }
 
     @Override

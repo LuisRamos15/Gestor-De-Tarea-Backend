@@ -16,9 +16,10 @@ public class TareasDTO {
 
     private String fechaVencimiento;
 
-
-
     private String prioridad;
+
+    private String categoria;
+
     public enum Estado { COMPLETADO, PENDIENTE, EN_PROCESO };
     private Estado status;
 
@@ -55,7 +56,6 @@ public class TareasDTO {
         this.descripcion = descripcion;
     }
 
-
     public String getFechaVencimiento() {
         return fechaVencimiento;
     }
@@ -72,16 +72,24 @@ public class TareasDTO {
         this.prioridad = prioridad;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     public TareasDTO() {
     }
 
-    public TareasDTO(Long id, String titulo, String descripcion, String fechaVencimiento, String prioridad, Estado status) {
+    public TareasDTO(Long id, String titulo, String descripcion, String fechaVencimiento, String prioridad, String categoria, Estado status) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaVencimiento = fechaVencimiento;
         this.prioridad = prioridad;
+        this.categoria = categoria;
         this.status = status;
     }
-
 }

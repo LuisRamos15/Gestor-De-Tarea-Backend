@@ -7,9 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-
 @Table(name = "tareas")
 public class Tareas {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,6 +26,9 @@ public class Tareas {
     @Column(name = "prioridad")
     private String prioridad;
 
+    @Column(name = "categoria")
+    private String categoria;
+
     @Column(name = "usuario_Id")
     private Long usuarioId;
 
@@ -33,25 +36,6 @@ public class Tareas {
     @Enumerated (EnumType.STRING)
     private Estado status;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "Tareas_Categorias", joinColumns = @JoinColumn(name = "Tareas_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "Categorias_id", referencedColumnName = "id")
-    )
-    private Set<Categoria> categorias = new HashSet<>();
-
-
-    public Tareas(Set<Categoria> categorias) {
-        this.categorias = categorias;
-    }
-
-    public Set<Categoria> getCategorias() {
-        return categorias;
-    }
-
-    public void setCategorias(Set<Categoria> categorias) {
-        this.categorias = categorias;
-    }
 
     public Estado getStatus() {
         return status;
@@ -109,15 +93,23 @@ public class Tareas {
         this.prioridad = prioridad;
     }
 
-    public Tareas(Long id, String titulo, String descripcion, String fechaVencimiento, String prioridad, Long usuarioId, Estado status, Set<Categoria> categorias) {
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public Tareas(Long id, String titulo, String fechaVencimiento, String prioridad, String descripcion, String categoria, Long usuarioId, Estado status) {
         this.id = id;
         this.titulo = titulo;
-        this.descripcion = descripcion;
         this.fechaVencimiento = fechaVencimiento;
         this.prioridad = prioridad;
+        this.descripcion = descripcion;
+        this.categoria = categoria;
         this.usuarioId = usuarioId;
         this.status = status;
-        this.categorias = categorias;
     }
 
     public Tareas() {
