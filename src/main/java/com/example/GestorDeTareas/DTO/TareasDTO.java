@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 
 public class TareasDTO {
-    private Long id;
+    private String id;
 
     private String titulo;
 
@@ -31,12 +31,12 @@ public class TareasDTO {
         this.status = status;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -83,7 +83,7 @@ public class TareasDTO {
     public TareasDTO() {
     }
 
-    public TareasDTO(Long id, String titulo, String descripcion, String fechaVencimiento, String prioridad, String categoria, Estado status) {
+    public TareasDTO(String id, String titulo, String descripcion, String fechaVencimiento, String prioridad, String categoria, Estado status) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;

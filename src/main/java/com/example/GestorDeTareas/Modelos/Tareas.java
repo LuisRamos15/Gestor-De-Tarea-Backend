@@ -11,8 +11,12 @@ import java.util.Set;
 public class Tareas {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+
+    @Column(name = "task_id")
+    private String taskId;
 
     @Column(name = "titulo", length = 20, nullable = false)
     private String titulo;
@@ -59,14 +63,6 @@ public class Tareas {
         this.status = status;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getTitulo() {
         return titulo;
     }
@@ -107,15 +103,28 @@ public class Tareas {
         this.categoria = categoria;
     }
 
-    public Tareas(Long id, String titulo, String fechaVencimiento, String prioridad, String descripcion, String categoria, Long usuarioId, Estado status) {
+    public Tareas(Long id, String taskId, String titulo, String descripcion, String fechaVencimiento, String prioridad, String categoria, Long usuarioId, Estado status) {
         this.id = id;
+        this.taskId = taskId;
         this.titulo = titulo;
+        this.descripcion = descripcion;
         this.fechaVencimiento = fechaVencimiento;
         this.prioridad = prioridad;
-        this.descripcion = descripcion;
         this.categoria = categoria;
         this.usuarioId = usuarioId;
         this.status = status;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
     public Tareas() {

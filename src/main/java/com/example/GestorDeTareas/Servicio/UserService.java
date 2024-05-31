@@ -51,7 +51,10 @@ public class UserService {
             return "Error internal server";
         }
         String tokenUser = generateToken(usuario);
-        return new AuthDTO(usuario, tokenUser, "");
+        return new Object[]{
+                tokenUser,
+                usuario.getId()
+        };
 
         //relacionar la tarea con el usuario que se ha logeado
         //verificar que el usuario tenga el token para poder crear la tarea
