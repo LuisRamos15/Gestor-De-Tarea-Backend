@@ -38,21 +38,13 @@ public class Tareas {
     @Column(name = "usuario_Id")
     private Long usuarioId;
 
-    public enum Estado { COMPLETADO, PENDIENTE, EN_PROCESO };
+    public enum Estado { COMPLETADO, PENDIENTE, EN_PROCESO }
     @Enumerated (EnumType.STRING)
     private Estado status;
-
-    /* @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "Tareas_Categorias", joinColumns = @JoinColumn(name = "Tareas_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "Categorias_id", referencedColumnName = "id")
-    )
-    private Set<Categoria> categorias = new HashSet<>(); */
 
     public Estado getStatus() {
         return status;
     }
-
     public Long getUsuarioId() {
         return usuarioId;
     }

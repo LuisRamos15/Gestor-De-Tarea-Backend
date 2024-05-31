@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 
-@Table(name = "usuario")
+@Table(name = "usuario", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }),
+        @UniqueConstraint(columnNames = { "email" }) })
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +19,7 @@ public class Usuario {
 
     public Usuario() {
     }
-
+//si
     public Usuario(Long id, String username, String password, String emil) {
         this.id = id;
         this.username = username;
